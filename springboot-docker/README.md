@@ -62,6 +62,7 @@ public class SpringbootDockerApplication {
 
 | 命令  | ./mvnw package && java -jar target/springboot-docker-0.0.1.jar |
 | --- | -------------------------------------------------------------- |
+
 然後到[localhost:8080](http://localhost:8080/)查看「Hello Docker World」訊息。
 
 ### 步驟 3 ：容器化 「它」
@@ -84,6 +85,7 @@ It is then copied (by the `COPY` command) the project JAR file into the contai
 
 | 命令  | docker build -t springio/springboot-docker . |
 | --- | -------------------------------------------- |
+
 This command builds an image and tags it as `springio/springboot-docker`．
 
 此命令建立一個Docker 映像檔並將其標記為`springio/springboot-docker`。
