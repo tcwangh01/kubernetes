@@ -2,8 +2,7 @@
 
 ## 前言
 
-基本上只要是 Container-Base 的服務，都可以拿來讓 Kubernetes Pod 部署，並且不僅限於 Docker Container，只是現代容器趨勢依舊是被 Docker 掌握，加上他的方便性與穩定性，所以本篇將使用 Spring Boot 程式碼建立出一個簡易的 API Server，並使用 Docker 將此 API Server 建構為容器，作為可部署至Kubernetes 的簡單容器．
-
+凡是基於 Container 的服務，基本上都可以部署至 Kubernetes Pod，且並不限於 Docker 容器。儘管如此，Docker 仍因其廣泛的支援、易用性與穩定性，在現代容器技術中占有主導地位。因此，本文將以 Spring Boot 撰寫一個簡單的 API Server，並透過 Docker 將其封裝成容器，作為一個可部署至 Kubernetes 的基礎範例。
 ## 目錄與步驟
 
 1. [步驟 1：使用 Spring Initializr 建立 Spring Boot Project](#步驟-1使用-spring-initializr-建立--spring-boot-project)
