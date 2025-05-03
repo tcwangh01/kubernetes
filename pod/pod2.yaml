@@ -1,0 +1,28 @@
+# pod2.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: foo
+  labels:
+    app: foo
+    type: demo
+spec:
+  containers:
+    - name: foo
+      image: springio/springboot-foo
+      ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bar
+  labels:
+    app: bar
+    type: demo
+spec:
+  containers:
+    - name: bar
+      image: springio/springboot-bar
+      ports:
+        - containerPort: 8080
