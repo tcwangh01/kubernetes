@@ -6,6 +6,8 @@
       <list>
         <option value="$PROJECT_DIR$/helloWorld/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-docker/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-foo/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-bar/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
