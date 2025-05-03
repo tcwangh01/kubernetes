@@ -1,0 +1,13 @@
+# pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: foo
+  labels:
+    app: foo
+spec:
+  containers:
+    - name: springboot-docker
+      image: springio/springboot-docker
+      ports:
+        - containerPort: 8080
