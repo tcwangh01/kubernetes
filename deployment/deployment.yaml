@@ -29,7 +29,7 @@ metadata:
   labels:
     type: demo
 spec:
-  replicas: 1
+  replicas: 2 # demo 1 to 2 in step 3
   selector:
     matchLabels:
       type: demo
@@ -39,7 +39,7 @@ spec:
         type: demo
     spec:
       containers:
-        - name: foo
+        - name: bar
           image: springio/springboot-bar
           ports:
             - containerPort: 8080
