@@ -1,0 +1,45 @@
+# deployment.yaml
+apiVersion: apps/v1 # 指定使用的 API 版本。apps/v1 是目前 Deployment 常用的穩定版本。
+kind: Deployment    # 宣告這是一個 Deployment 物件，用來管理應用程式的 Pod。
+metadata:
+  name: foo-deployment # 這個 Deployment 的名稱叫做 foo-deployment。
+  labels:
+    type: demo      # 這個 Deployment 帶有 type: demo 的標籤，可用於管理、選取等用途（例如搭配 Service）。
+spec:
+  replicas: 1       # 定義這個 Deployment 要保持 1 個 Pod 實例在執行中。
+  selector:
+    matchLabels:
+      type: demo    # 這裡表示 Deployment 會選取所有帶有 type: demo 標籤的 Pod 來管理。
+                    # 這個標籤要跟 template 裡的 label 完全相符，否則 Deployment 會無法正常關聯 Pod。
+  template:         # 這是 Deployment 用來建立 Pod 的範本（template）。
+    metadata:
+      labels:
+        type: demo  # Pod 會帶有 type: demo 的標籤，跟上面 selector 對應。
+    spec:
+      containers:
+        - name: foo # 這個 Pod 中只會啟動一個容器，名稱叫 foo。
+          image: springio/springboot-foo # 這是要執行的容器映像，來自 Docker Hub。
+          ports:
+            - containerPort: 8080 # 宣告這個容器內部會對外開啟 8080 埠號，通常是應用程式監聽的 HTTP 埠。
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-deployment
+  labels:
+    type: demo
+spec:
+  replicas: 2 # demo 1 to 2 in step 3
+  selector:
+    matchLabels:
+      type: demo
+  template:
+    metadata:
+      labels:
+        type: demo
+    spec:
+      containers:
+        - name: bar
+          image: springio/springboot-bar:v1 # 為了測試回滾, 這個 image 實際上不存在
+          ports:
+            - containerPort: 8080
