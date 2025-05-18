@@ -1,0 +1,17 @@
+# headless-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: foo-service
+  labels:
+    app: foo
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  #關鍵設定，將 clusterIP 設定為 「None」 表示這是個 Headless Service．
+  #不會有統一的 IP，而是透過 DNS 回傳後端 Pod 的 IP 或主機名稱。
+  clusterIP: None
+  selector:
+    app: foo # 篩選器，用來選擇哪些 Pod 會被這個 Service 管理
