@@ -1,20 +1,23 @@
 # statefulset.yaml
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: foo-statefulset
 spec:
+  updateStrategy:
+    type: RollingUpdate # 預設為滾動更新
   selector:
     matchLabels:
       app: foo
-  serviceName: "foo-service"
+  serviceName: "foo-service" # 指定與 statefulset 相關的 headless service 的名稱
   replicas: 3
   template:
     metadata:
       labels:
         app: foo
     spec:
+      # 指定kubernetes 發送終止信號到 Pod 中的容器後，應給予多長的緩衝期供 Pod 內的容器進行清理工作
+      terminationGracePeriodSeconds: 10
       containers:
         - name: foo
           image: springio/springboot-foo
@@ -22,13 +25,13 @@ spec:
             - containerPort: 8080
           volumeMounts:
             - mountPath: /data
-              name: data
+              name: data # 定義要使用的 Persistent Volume, 需對應到 volumeClaimTemplate 中的定義
   volumeClaimTemplates:
     - metadata:
         name: data
       spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: "hostpath"
+        accessModes: ["ReadWriteOnce"] # 定義了如何存取 Persistent Volume
+        storageClassName: "hostpath" # 定義了用於建立 Persistent Volume 的 StorageClass 名稱
         resources:
           requests:
-            storage: 1Gi
+            storage: 1Gi # 定義了 Persistent Volume 的大小
