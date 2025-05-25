@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    note: Hello, I am development!
+  labels:
+    app: dev-foo
+    by: kustomization
+    type: dev-demo
+  name: dev-foo-service-v1
+  namespace: dev-namespace
+spec:
+  ports:
+  - port: 8010
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: dev-foo
+    by: kustomization
+    type: dev-demo
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    note: Hello, I am development!
+  labels:
+    app: dev-foo
+    by: kustomization
+    type: dev-demo
+  name: dev-the-dev-development
+  namespace: dev-namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dev-foo
+      by: kustomization
+      type: dev-demo
+  template:
+    metadata:
+      annotations:
+        note: Hello, I am development!
+      labels:
+        app: dev-foo
+        by: kustomization
+        type: dev-demo
+    spec:
+      containers:
+      - image: springio/springboot-foo
+        name: the-dev-container
+        ports:
+        - containerPort: 8080

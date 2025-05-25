@@ -1,0 +1,42 @@
+# overlay/overalys/production/kustomization.yaml
+
+resources:
+  - ./namespace.yaml
+  - ../../base
+
+namePrefix: prod-
+
+namespace: production-namespace
+
+commonLabels:
+  type: prod-demo
+  app: prod-foo
+
+commonAnnotations:
+  note: Hello, I am production!
+
+images:  # 指定導入設定檔中指定要覆寫的 image name 與 tag
+  - name: springio/api-service
+    newName: springio/springboot-foo
+
+patches:
+  - patch: |
+      - op: replace
+        path: /metadata/name
+        value: the-prod-development
+      - op: replace
+        path: /spec/template/spec/containers/0/name
+        value: the-prod-container
+    target:
+      group: apps
+      kind: Deployment
+      version: v1
+      name: foo-deployment-v1
+  - patch: |
+      - op: replace
+        path: /spec/ports/0/port
+        value: 8020
+    target:
+      kind: Service
+      version: v1
+      name: service

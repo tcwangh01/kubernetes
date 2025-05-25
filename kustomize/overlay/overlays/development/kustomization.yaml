@@ -1,0 +1,42 @@
+# overlay/overalys/development/kustomization.yaml
+
+resources:
+  - ./namespace.yaml
+  - ../../base # 此處的 Resource 指向另一個 Kustomization.yaml, 可將設定疊加上去
+
+namePrefix: dev- # 可建立在 resource name 原本基礎上繼續添加前後綴
+
+namespace: dev-namespace # 指定測試用 namespace
+
+commonLabels:
+  type: dev-demo
+  app: dev-foo
+
+commonAnnotations:
+  note: Hello, I am development!
+
+images:  # 指定導入設定檔中指定要覆寫的 image name 與 tag
+  - name: springio/api-service
+    newName: springio/springboot-foo
+# 此參數可以用 Path, Value 指定符合 Target 條件資源中的任何 Key Value，並且使用各種 op 達到替換、添加或移除等操作
+patches:
+  - patch: |
+      - op: replace
+        path: /metadata/name
+        value: the-dev-development
+      - op: replace
+        path: /spec/template/spec/containers/0/name
+        value: the-dev-container
+    target:
+      group: apps
+      kind: Deployment
+      version: v1
+      name: foo-deployment-v1
+  - patch: |
+      - op: replace
+        path: /spec/ports/0/port
+        value: 8010  # 設定使用 8010 Port 作為測試
+    target:
+      kind: Service
+      version: v1
+      name: service
