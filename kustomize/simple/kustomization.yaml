@@ -1,0 +1,21 @@
+# simple/kustomization.yaml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: foo- # 在對應資源名稱添加指定前綴
+nameSuffix: -v1 # 在對應資源名稱添加指定後綴
+
+commonLabels: # 在所有導入資源皆附上對應的 label,若存在就覆蓋
+  by: kustomization
+
+commonAnnotations: # 在所有導入資源皆附上對應的 Annotation,若存在就覆蓋
+  note: Hello, I am foo!
+
+images:  # 指定導入設定檔中指定要覆寫的 image name 與 tag
+  - name: springio/api-service
+    newName: springio/springboot-foo
+
+resources:  # 導入需要被 Kustomization 覆寫的設定檔路徑
+  - deployment.yaml
+  - service.yaml
