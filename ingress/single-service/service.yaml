@@ -1,0 +1,14 @@
+#single-service/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    type: demo
+  type: NodePort
+  ports:
+    - port: 8000
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 30390
