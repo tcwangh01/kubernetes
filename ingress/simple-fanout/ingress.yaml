@@ -1,4 +1,4 @@
-#simple-fanout/ingress.yamml
+#simple-fanout/ingress.yaml.yamml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
