@@ -1,0 +1,26 @@
+# emptydir.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-pod
+spec:
+  volumes:
+    - name: html
+      emptyDir: {}
+  containers:
+    - name: nginx
+      image: nginx:latest
+      volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: html
+    - name: alpine
+      image: alpine
+      volumeMounts:
+        - mountPath: /html
+          name: html
+      command: ["/bin/sh", "-c"]
+      args:
+        - while true; do
+          echo $(hostname) $(date) >> /html/index.html
+          sleep 10;
+          done
